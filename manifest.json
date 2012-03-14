@@ -1,0 +1,23 @@
+{
+	"BundleType":"Application",
+	"AppName":{
+		"en":"Geomodium"
+	},
+	"RequiredPermissions":[
+		"http://*.googleapis.com",
+		"http://*.gstatic.com",
+	],
+	"AppIcon":{
+		"38x18":"icon36x18",
+		"32x32":"",
+		"64x64":"",
+		"128x128":"",
+		"256x256":""
+	},
+	"BundleIdentifier":"com.krikelin.geomodium",
+	"BundleVersion":"0.1.5.gcfae01",
+	"RequiredInterface" : 1,
+	"VendorIdentifier":"com.krikelin",
+	"SupportedLanguages":["en"],
+	"BundleCopyright":"(C) 2011 Alexander Forselius"
+}

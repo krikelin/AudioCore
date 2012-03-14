@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+		@import url("sp://import/css/api.css");
+		@import url("sp://import/css/eve.css");	
+		html { height: 100% }
+      body { background-color: rgb(60,60,60); height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCzrK8N0wwEthziNb_XlLAXJ0D45naib1o&sensor=true">
+    </script>
+    <script type="text/javascript">
+		var sp = getSpotifyApi(1);
+		var models = sp.require("sp://import/scripts/api/models");
+		var views = sp.require("sp://import/scripts/api/views");
+		var auth = sp.require("sp://import/scripts/api/auth");
+		var jquery = sp.require("sp://geomodium/js/jquery-1.7.1.min");
+		var ext = sp.require("sp://geomodium/visualizer");
+	
+	
+		var scale = 100;
+		var cycle = 0; // cycle of circle
+		var radius = 320; // size of the circle
+		function visualize(rate) {
+		}
+		
+		function initialize() {
+			models.player.observe(models.EVENT.AUDIODELIVERY, function(audioData) {	
+				
+				if(audioData) {
+					//		console.log(audioData);
+					var canvas  = document.getElementById("canvas");  
+					var context = canvas.getContext("2d");
+					console.log("A");
+					context.fillStyle = "rgb(60,60,60)";  
+					context.fillRect (0, 0, canvas.width, canvas.height);
+					context.fillStyle = "rgb(128, 128, 128)";  
+					context.fillRect (10, canvas.height - 50 - audioData.hertz, 24, 50 + audioData.hertz);
+					context.fillRect (70, canvas.height - 50 - audioData.hertz*Math.cos(audioData.hertz), 24, 50 + audioData.hertz*Math.cos(audioData.hertz));
+					context.fillRect (120, canvas.height - 50 - audioData.hertz*Math.sin(audioData.hertz), 24, 50 + audioData.hertz*Math.sin(audioData.hertz));
+					
+					var middle = { x: canvas.width / 2, y: canvas.height};
+					var pos =  {
+						 x: (Math.cos(  (cycle / scale)  / 360) - Math.sin( (cycle / scale) / 360)) * radius,
+						 y: (Math.sin(  (cycle / scale)  / 360) + Math.cos( (cycle / scale) / 360)) * radius,
+					};
+					
+					var position = { x: middle.x + pos.x, y: middle.y + pos.y};
+					context.lineWidth = 1;
+					context.beginPath();
+					context.moveTo(middle.x, middle.y );
+					context.lineTo(pos.x + middle.x, pos.y + middle.y);
+					context.stroke();
+					
+					
+				}
+			});
+			/*		
+			console.log(google.maps);
+			var myOptions = {
+			  center: new google.maps.LatLng(-34.397, 150.644),
+			  zoom: 8,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			var map = new google.maps.Map(document.getElementById("map_canvas"),
+				myOptions);
+			var track = mo
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.onreadystatechange = function() {
+				if(xmlHttp.readyState == 4) {
+					if(xmlHttp.status == 200) {
+						var marker = new google.maps.Marker({
+							position: myLatlng,
+							map: map,
+							title:"Hello World!"
+					}
+				}
+			};
+			xmlHttp.open("http://search.twitter.com/search.json?q=open.spotify.com&geocode=true
+			
+			google.maps.event.addListener(marker, 'click', function() {
+				map.setZoom(8);
+			});*/
+			
+		}
+    </script>
+  </head>
+  <body onload="initialize()">
+    <canvas id="canvas" width="364" style="left:20%; top:20%; position: absolute;" height="368">
+  </body>
+</html>
